@@ -1,18 +1,6 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 
-const rapidApiKey = import.meta.env.VITE_RAPID_API_KEY;
-const options = {
-    method: 'GET',
-    url: 'https://article-extractor-and-summarizer.p.rapidapi.com/summarize',
-    params: {
-      url: 'https://time.com/6266679/musk-ai-open-letter/',
-      length: '3'
-    },
-    headers: {
-      'X-RapidAPI-Key': 'a3ccffb4b9msh4b55af3eaf39cfbp14df45jsne8bfb4ed9952',
-      'X-RapidAPI-Host': 'article-extractor-and-summarizer.p.rapidapi.com'
-    }
-  };
+/*const rapidApiKey = import.meta.env.VITE_RAPID_API_KEY;*/
   
 
 export const articleApi = createApi
@@ -21,7 +9,7 @@ export const articleApi = createApi
     baseQuery: fetchBaseQuery({
         baseUrl: 'https://article-extractor-and-summarizer.p.rapidapi.com/',
         prepareHeaders: (headers) => {
-            headers.set('X-RapidAPI-Key', rapidApiKey);
+            headers.set('X-RapidAPI-Key', 'a3ccffb4b9msh4b55af3eaf39cfbp14df45jsne8bfb4ed9952' );
             headers.set('X-RapidAPI-Host', 'article-extractor-and-summarizer.p.rapidapi.com');
             return headers;
         }
@@ -29,7 +17,7 @@ export const articleApi = createApi
     endpoints: (builder) => ({
         getSummary: builder.query({
             query: (params) => `/summarize?url=${encodeURIComponent(params.articleUrl)}&length=3`,
-        })
+        }),
     }),
 });
 

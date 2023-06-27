@@ -39,7 +39,18 @@ const demo = () => {
       localStorage.setItem('articles', JSON.stringify(updatedArticles));
 
     }
-  }
+  };
+  const handleCopy = (copyUrl) => {
+    setCopied(copyUrl);
+    navigator.clipboard.writeText(copyUrl);
+    setTimeout(() => setCopied(false), 3000);
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      handleSubmit(e);
+    }
+  };
 
 
   return (
@@ -57,20 +68,18 @@ const demo = () => {
             className="absolute left-0 my-2 ml-3 w-5">
           </img>
           <input
-            type='search'
-            id="search"
-
+            type='url'
             placeholder='Paste the article link'
-            value=""
+            value={article.url}
             onChange={(e) => setArticle({ ...article, url: e.target.value })}
+            onKeyDown={handleKeyDown}
             required
             className='url_input peer' // When you need to style an element based on the state of a sibling element, mark the sibling with the peer class, and use peer-* modifiers to style the target element
           />
           <button
-            type="submit"
-            className="submit_btn
-             peer-focus:border-gray-700
-             peer-focus:text-gray-700">
+            type='submit'
+            className='submit_btn peer-focus:border-gray-700 peer-focus:text-gray-700 '
+          >
             <p>↩</p>
           </button>
         </form>
@@ -92,8 +101,8 @@ const demo = () => {
 
           ))}
         </div>
-        {/* Browse URL History */}
       </div>
+      
       <div className="my-10 max-w-full flex justify-center items-center"> 
             {isFetching ? (
               <img src={loader} alt="loader" className="w-10 h-10" />
@@ -118,9 +127,8 @@ const demo = () => {
               )  
             )}
       </div>
-      {/* Result */}
     </section>
-  )
+  );
 
-}
-export default demo
+};
+export default demo;
